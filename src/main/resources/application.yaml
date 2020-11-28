@@ -15,36 +15,10 @@ spring:
   liquibase:
     change-log: classpath:/db/changelog/changelog-master.xml
 
-  security:
-    oauth2:
-#      client:
-#        registration:
-#          custom:
-#            client-id: my-book-api
-#            client-secret: secret
-#            scope: user_info
-#            authorization-grant-type: authorization_code
-#            redirect-uri: http://localhost:8081/login/oauth2/code
-#          github:
-#            client-id: d3f8b2e1d614cb15435a
-#            client-secret: 27d66ad02ede0ef8cf6a6e720fb9843c50521904
-#          goggle:
-#            client-id: 635953397895-hkpkmjro2hrtp3as1k396vi44oqc9kll.apps.googleusercontent.com
-#            client-secret: 6TypRE06H-wtQ3YOcE7Su9c1
-#        provider:
-#          custom:
-#            authorization-uri: http://localhost:8081/oauth/authorize
-#            token-uri: http://localhost:8081/oauth/token
-#            user-info-uri: http://localhost:8081/user/me
-#            user-name-attribute: name
 
-      resourceserver:
-        opaque-token:
-          introspection-uri: http://localhost:8081/oauth/introspect
-          client-id: my-books-api
-          client-secret: secret
-#        jwt:
-#          issuer-uri: https://dev-2762279.okta.com/oauth2/default
-#          jwk-set-uri: https://dev-2762279.okta.com/oauth2/default/v1/keys
-#          issuer-uri: http://localhost:8081/auth/realms/my-books
-#          jwk-set-uri: http://localhost:8081/auth/realms/my-books/protocol/openid-connect/certs
+application:
+  jwt:
+    secretKey: securesecuresecuresecuresecuresecuresecuresecuresecuresecuresecuresecuresecuresecuresecuresecure
+    tokenPrefix: Bearer
+    tokenExpirationAfterDays: 14
+
