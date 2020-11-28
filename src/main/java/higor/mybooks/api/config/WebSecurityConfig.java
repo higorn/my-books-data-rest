@@ -1,4 +1,4 @@
-package higor.mybooks.config;
+package higor.mybooks.api.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,11 +9,22 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import javax.crypto.SecretKey;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+  private final JwtConfig jwtConfig;
+  private final SecretKey secretKey;
+
+  public WebSecurityConfig(JwtConfig jwtConfig, SecretKey secretKey) {
+    this.jwtConfig = jwtConfig;
+    this.secretKey = secretKey;
+  }
 
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -24,7 +35,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
+        .csrf().disable()
+        .addFilterAfter(new JwtClientCredentialsAuthenticationFilter(authenticationManager(), jwtConfig, secretKey),
+            UsernamePasswordAuthenticationFilter.class)
+        .addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfig), JwtClientCredentialsAuthenticationFilter.class)
         .authorizeRequests()
+        .antMatchers("/oauth/token").permitAll()
         .anyRequest().authenticated()
         .and()
         .formLogin().permitAll();

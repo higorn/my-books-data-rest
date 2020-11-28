@@ -1,4 +1,4 @@
-package higor.mybooks.config;
+package higor.mybooks.api.config;
 
 import io.jsonwebtoken.security.Keys;
 import org.springframework.context.annotation.Bean;

@@ -1,4 +1,4 @@
-package higor.mybooks.config;
+package higor.mybooks.api.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
