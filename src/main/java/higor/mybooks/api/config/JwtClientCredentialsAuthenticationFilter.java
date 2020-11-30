@@ -15,6 +15,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Base64;
+
+import static java.util.Optional.ofNullable;
 
 public class JwtClientCredentialsAuthenticationFilter extends OncePerRequestFilter {
 
@@ -46,6 +49,14 @@ public class JwtClientCredentialsAuthenticationFilter extends OncePerRequestFilt
 
       String username = request.getParameter("client_id");
       String password = request.getParameter("client_secret");
+      if (username == null || password == null) {
+        String authorization = ofNullable(request.getHeader(jwtConfig.getAuthorizationHeader()))
+            .map(authHeader -> new String(Base64.getDecoder().decode(authHeader.replace("Basic ", ""))))
+            .orElse(":");
+        String[] credentials = authorization.split(":");
+        username = credentials[0];
+        password = credentials[1];
+      }
       Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
 
       OAuthTokenResponse tokenResponse = new OAuthTokenResponse(authenticationManager.authenticate(authentication),
