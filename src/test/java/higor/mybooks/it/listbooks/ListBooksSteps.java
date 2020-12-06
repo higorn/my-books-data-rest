@@ -1,7 +1,7 @@
 package higor.mybooks.it.listbooks;
 
-import higor.mybooks.domain.book.Book;
-import higor.mybooks.domain.book.BookRepository;
+import higor.mybooks.entity.Book;
+import higor.mybooks.repo.BookRepository;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -23,8 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ListBooksSteps {
 
   @Autowired
-  private BookRepository     bookRepository;
-  private Page<Book>         booksPage;
+  private BookRepository bookRepository;
+  private Page<Book>     booksPage;
 
   @Before
   public void setUp() {

@@ -15,10 +15,14 @@ spring:
   liquibase:
     change-log: classpath:/db/changelog/changelog-master.xml
 
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
 
 application:
   jwt:
     secretKey: securesecuresecuresecuresecuresecuresecuresecuresecuresecuresecuresecuresecuresecuresecuresecure
     tokenPrefix: Bearer
     tokenExpirationAfterDays: 14
+
 

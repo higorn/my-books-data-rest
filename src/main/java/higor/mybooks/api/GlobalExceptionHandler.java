@@ -2,7 +2,6 @@ package higor.mybooks.api;
 
 import higor.mybooks.api.config.JwtClientCredentialsAuthenticationFilter;
 import higor.mybooks.api.dto.ErrorDto;
-import higor.mybooks.domain.exception.DuplicatedEntryException;
 import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -27,10 +26,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     return handleExceptionWithContent(e, HttpStatus.BAD_REQUEST);
   }
 
+/*
   @ExceptionHandler({ DuplicatedEntryException.class })
   public ResponseEntity<ErrorDto> handleConflict(Exception e) {
     return handleExceptionWithContent(e, HttpStatus.CONFLICT);
   }
+*/
 
   @ExceptionHandler({ JwtClientCredentialsAuthenticationFilter.MissingGrantTypeException.class })
   public ResponseEntity<Object> handleMissingGrantType(Exception e) {
