@@ -16,8 +16,8 @@ public class Book {
   private Integer      pages;
   @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(name = "account_book",
-      joinColumns = @JoinColumn(name = "account_id", referencedColumnName = "id"),
-      inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id")
+      joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
+      inverseJoinColumns = @JoinColumn(name = "account_id", referencedColumnName = "id")
   )
   private List<User>   users;
 

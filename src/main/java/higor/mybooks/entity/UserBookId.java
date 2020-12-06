@@ -13,6 +13,14 @@ public class UserBookId implements Serializable {
   @Column(name = "book_id")
   private Integer bookId;
 
+  public UserBookId() {
+  }
+
+  public UserBookId(Integer userId, Integer bookId) {
+    this.userId = userId;
+    this.bookId = bookId;
+  }
+
   public Integer getUserId() {
     return userId;
   }

@@ -1,28 +1,28 @@
 package higor.mybooks.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "account_book")
 public class UserBook {
-  @Id
-  @SequenceGenerator(name = "UserBook_SEQ", sequenceName = "account_book_seq", allocationSize = 1)
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UserBook_SEQ")
-  private Integer id;
+
+  @EmbeddedId
+  private UserBookId id;
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "account_id")
+  @MapsId("userId")
   private User    user;
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "book_id")
+  @MapsId("bookId")
   private Book    book;
   @Column(name = "is_read")
   private boolean read;
 
-  public Integer getId() {
+  public UserBookId getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(UserBookId id) {
     this.id = id;
   }
 
@@ -50,7 +50,7 @@ public class UserBook {
     this.read = read;
   }
 
-  public UserBook id(Integer id) {
+  public UserBook id(UserBookId id) {
     this.id = id;
     return this;
   }
@@ -68,5 +68,21 @@ public class UserBook {
   public UserBook read(boolean read) {
     this.read = read;
     return this;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+
+    if (o == null || getClass() != o.getClass())
+      return false;
+
+    UserBook that = (UserBook) o;
+    return Objects.equals(user, that.user) && (Objects.equals(book, that.book));
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(user, book);
   }
 }
