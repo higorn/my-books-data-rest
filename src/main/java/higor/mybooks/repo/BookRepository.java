@@ -8,6 +8,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RestResource;
 
+//@Api(tags = "Books")
 public interface BookRepository extends PagingAndSortingRepository<Book, Integer> {
   @RestResource(rel = "find-by-filter", path = "find-by-filter")
   Page<Book> findByTitleContainingIgnoreCaseOrSubtitleContainingIgnoreCaseOrAuthorContainingIgnoreCaseOrPublishingCompanyContainingIgnoreCase(
