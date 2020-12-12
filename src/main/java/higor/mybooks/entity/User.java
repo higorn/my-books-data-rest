@@ -14,7 +14,7 @@ public class User {
   private String surname;
   private String         email;
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private List<UserBook> userBooks;
+  private List<UserBook> books;
 
   public Integer getId() {
     return id;
@@ -48,11 +48,11 @@ public class User {
     this.email = email;
   }
 
-  public List<UserBook> getUserBooks() {
-    return userBooks;
+  public List<UserBook> getBooks() {
+    return books;
   }
 
-  public void setUserBooks(List<UserBook> userBooks) {
-    this.userBooks = userBooks;
+  public void setBooks(List<UserBook> books) {
+    this.books = books;
   }
 }
