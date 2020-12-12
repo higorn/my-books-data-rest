@@ -12,9 +12,9 @@ public class User {
   private Integer id;
   private String name;
   private String surname;
-  private String email;
-  @ManyToMany(mappedBy = "users")
-  private List<Book> books;
+  private String         email;
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<UserBook> userBooks;
 
   public Integer getId() {
     return id;
@@ -48,11 +48,11 @@ public class User {
     this.email = email;
   }
 
-  public List<Book> getBooks() {
-    return books;
+  public List<UserBook> getUserBooks() {
+    return userBooks;
   }
 
-  public void setBooks(List<Book> books) {
-    this.books = books;
+  public void setUserBooks(List<UserBook> userBooks) {
+    this.userBooks = userBooks;
   }
 }

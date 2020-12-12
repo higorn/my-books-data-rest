@@ -13,13 +13,9 @@ public class Book {
   private String       subtitle;
   private String       author;
   private String       publishingCompany;
-  private Integer      pages;
-  @ManyToMany(cascade = CascadeType.ALL)
-  @JoinTable(name = "account_book",
-      joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
-      inverseJoinColumns = @JoinColumn(name = "account_id", referencedColumnName = "id")
-  )
-  private List<User>   users;
+  private Integer        pages;
+  @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<UserBook> userBooks;
 
   public Integer getId() {
     return id;
@@ -99,16 +95,16 @@ public class Book {
     return this;
   }
 
-  public List<User> getUsers() {
-    return users;
+  public List<UserBook> getUserBooks() {
+    return userBooks;
   }
 
-  public void setUsers(List<User> users) {
-    this.users = users;
+  public void setUserBooks(List<UserBook> userBooks) {
+    this.userBooks = userBooks;
   }
 
-  public Book users(List<User> users) {
-    this.users = users;
+  public Book users(List<UserBook> users) {
+    this.userBooks = users;
     return this;
   }
 }
