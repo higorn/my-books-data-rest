@@ -14,7 +14,7 @@ public class Book {
   private String       author;
   private String       publishingCompany;
   private Integer        pages;
-  @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private List<UserBook> userBooks;
 
   public Integer getId() {

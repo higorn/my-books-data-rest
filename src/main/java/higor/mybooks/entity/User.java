@@ -13,7 +13,7 @@ public class User {
   private String name;
   private String surname;
   private String         email;
-  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private List<UserBook> userBooks;
 
   public Integer getId() {

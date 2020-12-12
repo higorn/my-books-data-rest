@@ -7,22 +7,24 @@ import java.util.Objects;
 @Table(name = "account_book")
 public class UserBook {
 
-  @EmbeddedId
-  private UserBookId id;
+  @Id
+  @SequenceGenerator(name = "UserBook_SEQ", sequenceName = "account_book_seq", allocationSize = 1)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UserBook_SEQ")
+  private Integer id;
   @ManyToOne(fetch = FetchType.LAZY)
-  @MapsId("userId")
+  @JoinColumn(name = "account_id")
   private User    user;
   @ManyToOne(fetch = FetchType.LAZY)
-  @MapsId("bookId")
+  @JoinColumn(name = "book_id")
   private Book    book;
   @Column(name = "is_read")
   private boolean read;
 
-  public UserBookId getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(UserBookId id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
@@ -50,7 +52,7 @@ public class UserBook {
     this.read = read;
   }
 
-  public UserBook id(UserBookId id) {
+  public UserBook id(Integer id) {
     this.id = id;
     return this;
   }
