@@ -7,7 +7,7 @@ spring:
       basePath: /v1
       defaultPageSize: 10
   datasource:
-    url: jdbc:postgresql://localhost:5432/my-books2
+    url: jdbc:postgresql://localhost:5432/my-book
     username: my-books
     password: secret
   #  jpa:
