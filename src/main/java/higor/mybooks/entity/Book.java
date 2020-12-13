@@ -1,6 +1,7 @@
 package higor.mybooks.entity;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -8,14 +9,21 @@ public class Book {
   @Id
   @SequenceGenerator(name = "Book_SEQ", sequenceName = "book_seq", allocationSize = 1)
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Book_SEQ")
-  private Integer      id;
-  private String       title;
-  private String       subtitle;
-  private String       author;
-  private String       publishingCompany;
+  private Integer        id;
+  private String         title;
+  private String         subtitle;
+  private String         author;
+  private Integer        edition;
+  private String         publisher;
   private Integer        pages;
+  private String         isbn;
+  @Column(name = "publishing_dt")
+  private LocalDate      publishingDate;
+
   @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private List<UserBook> users;
+  @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private List<BookCategory> categories;
 
   public Integer getId() {
     return id;
@@ -69,16 +77,28 @@ public class Book {
     return this;
   }
 
-  public String getPublishingCompany() {
-    return publishingCompany;
+  public Integer getEdition() {
+    return edition;
   }
 
-  public void setPublishingCompany(String publishingCompany) {
-    this.publishingCompany = publishingCompany;
+  public void setEdition(Integer edition) {
+    this.edition = edition;
+  }
+  public Book edition(Integer edition) {
+    this.edition = edition;
+    return this;
   }
 
-  public Book publishingCompaty(String publishingCompany) {
-    this.publishingCompany = publishingCompany;
+  public String getPublisher() {
+    return publisher;
+  }
+
+  public void setPublisher(String publisher) {
+    this.publisher = publisher;
+  }
+
+  public Book publisher(String publishingCompany) {
+    this.publisher = publishingCompany;
     return this;
   }
 
@@ -95,6 +115,32 @@ public class Book {
     return this;
   }
 
+  public String getIsbn() {
+    return isbn;
+  }
+
+  public void setIsbn(String isbn) {
+    this.isbn = isbn;
+  }
+
+  public Book isbn(String isbn) {
+    this.isbn = isbn;
+    return this;
+  }
+
+  public LocalDate getPublishingDate() {
+    return publishingDate;
+  }
+
+  public void setPublishingDate(LocalDate publishingDate) {
+    this.publishingDate = publishingDate;
+  }
+
+  public Book publishingDate(LocalDate publishingDate) {
+    this.publishingDate = publishingDate;
+    return this;
+  }
+
   public List<UserBook> getUsers() {
     return users;
   }
@@ -105,6 +151,19 @@ public class Book {
 
   public Book users(List<UserBook> users) {
     this.users = users;
+    return this;
+  }
+
+  public List<BookCategory> getCategories() {
+    return categories;
+  }
+
+  public void setCategories(List<BookCategory> categories) {
+    this.categories = categories;
+  }
+
+  public Book categories(List<BookCategory> categories) {
+    this.categories = categories;
     return this;
   }
 }

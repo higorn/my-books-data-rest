@@ -5,7 +5,25 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "account_book")
-public class UserBook {
+  public class UserBook {
+  public enum ConditionType {
+    NEW("NW"),
+    VERY_GOOD("VG"),
+    GOOD("GD"),
+    AVERAGE("AV"),
+    READABLE("RD"),
+    DAMAGED("DM");
+
+    private final String code;
+
+    ConditionType(String code) {
+      this.code = code;
+    }
+
+    public String getCode() {
+      return code;
+    }
+  }
 
   @Id
   @SequenceGenerator(name = "UserBook_SEQ", sequenceName = "account_book_seq", allocationSize = 1)
@@ -19,6 +37,9 @@ public class UserBook {
   private Book    book;
   @Column(name = "is_read")
   private boolean read;
+  private ConditionType condition;
+  private String description;
+  private int amount;
 
   public Integer getId() {
     return id;
@@ -52,6 +73,30 @@ public class UserBook {
     this.read = read;
   }
 
+  public ConditionType getCondition() {
+    return condition;
+  }
+
+  public void setCondition(ConditionType condition) {
+    this.condition = condition;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public int getAmount() {
+    return amount;
+  }
+
+  public void setAmount(int amount) {
+    this.amount = amount;
+  }
+
   public UserBook id(Integer id) {
     this.id = id;
     return this;
@@ -72,6 +117,21 @@ public class UserBook {
     return this;
   }
 
+  public UserBook condition(ConditionType condition) {
+    this.condition = condition;
+    return this;
+  }
+
+  public UserBook description(String description) {
+    this.description = description;
+    return this;
+  }
+
+  public UserBook amount(int amount) {
+    this.amount = amount;
+    return this;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -87,4 +147,5 @@ public class UserBook {
   public int hashCode() {
     return Objects.hash(user, book);
   }
+
 }

@@ -25,13 +25,16 @@
       <column name="title" type="varchar(255)"/>
       <column name="subtitle" type="varchar(255)"/>
       <column name="author" type="varchar(100)"/>
-      <column name="publishing_company" type="varchar(100)"/>
+      <column name="edition" type="integer"/>
+      <column name="publisher" type="varchar(100)"/>
       <column name="pages" type="integer"/>
+      <column name="isbn" type="varchar(100)"/>
+      <column name="publishing_dt" type="datetime"/>
     </createTable>
     <addNotNullConstraint tableName="book" columnName="id"/>
     <addNotNullConstraint tableName="book" columnName="title"/>
     <addNotNullConstraint tableName="book" columnName="author"/>
-    <addNotNullConstraint tableName="book" columnName="publishing_company"/>
+    <addNotNullConstraint tableName="book" columnName="publisher"/>
     <addPrimaryKey tableName="book" columnNames="id" constraintName="book_pkey"/>
   </changeSet>
 
@@ -83,11 +86,17 @@
       <column name="id" type="integer"/>
       <column name="account_id" type="integer"/>
       <column name="book_id" type="integer"/>
-      <column name="is_read" type="boolean"/>
+      <column name="is_read" type="boolean" defaultValue="f"/>
+      <column name="condition" type="char(2)"/>
+      <column name="description" type="varchar(512)"/>
+      <column name="amount" type="integer"/>
     </createTable>
     <addNotNullConstraint tableName="account_book" columnName="id"/>
     <addNotNullConstraint tableName="account_book" columnName="account_id"/>
     <addNotNullConstraint tableName="account_book" columnName="book_id"/>
+    <addNotNullConstraint tableName="account_book" columnName="is_read"/>
+    <addNotNullConstraint tableName="account_book" columnName="condition"/>
+    <addNotNullConstraint tableName="account_book" columnName="amount"/>
     <addUniqueConstraint tableName="account_book" columnNames="account_id, book_id"/>
     <addPrimaryKey tableName="account_book" columnNames="id" constraintName="account_book_pkey"/>
     <addForeignKeyConstraint baseTableName="account_book" baseColumnNames="account_id" constraintName="account_book_account_fk"
@@ -100,6 +109,71 @@
 
   <changeSet id="7" author="higor">
     <preConditions onFail="MARK_RAN">
+      <not>
+        <sequenceExists sequenceName="user_score_seq"/>
+      </not>
+    </preConditions>
+    <createSequence sequenceName="user_score_seq" incrementBy="1"/>
+  </changeSet>
+
+  <changeSet id="8" author="higor">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="user_score"/>
+      </not>
+    </preConditions>
+
+    <createTable tableName="user_score">
+      <column name="id" type="integer"/>
+      <column name="account_id" type="integer"/>
+      <column name="category" type="integer"/>
+      <column name="points" type="integer"/>
+    </createTable>
+    <addNotNullConstraint tableName="user_score" columnName="id"/>
+    <addNotNullConstraint tableName="user_score" columnName="account_id"/>
+    <addNotNullConstraint tableName="user_score" columnName="category"/>
+    <addUniqueConstraint tableName="user_score" columnNames="account_id, category"/>
+    <addPrimaryKey tableName="user_score" columnNames="id" constraintName="user_score_pkey"/>
+    <addForeignKeyConstraint baseTableName="user_score" baseColumnNames="account_id"
+                             constraintName="user_score_account_fk"
+                             referencedTableName="account"
+                             referencedColumnNames="id"/>
+  </changeSet>
+
+  <changeSet id="9" author="higor">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <sequenceExists sequenceName="book_category_seq"/>
+      </not>
+    </preConditions>
+    <createSequence sequenceName="book_category_seq" incrementBy="1"/>
+  </changeSet>
+
+  <changeSet id="10" author="higor">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="book_category"/>
+      </not>
+    </preConditions>
+
+    <createTable tableName="book_category">
+      <column name="id" type="integer"/>
+      <column name="book_id" type="integer"/>
+      <column name="category" type="integer"/>
+    </createTable>
+    <addNotNullConstraint tableName="book_category" columnName="id"/>
+    <addNotNullConstraint tableName="book_category" columnName="book_id"/>
+    <addNotNullConstraint tableName="book_category" columnName="category"/>
+    <addUniqueConstraint tableName="book_category" columnNames="book_id, category"/>
+    <addPrimaryKey tableName="book_category" columnNames="id" constraintName="book_category_pkey"/>
+    <addForeignKeyConstraint baseTableName="book_category" baseColumnNames="book_id"
+                             constraintName="book_category_book_fk"
+                             referencedTableName="book"
+                             referencedColumnNames="id"/>
+  </changeSet>
+
+  <changeSet id="11" author="higor">
+    <preConditions onFail="MARK_RAN">
       <tableIsEmpty tableName="book"/>
     </preConditions>
     <insert tableName="book">
@@ -107,7 +181,7 @@
       <column name="title" value="Design Patterns com Java"/>
       <column name="subtitle" value="Projeto orientado a objetos guuado por padrões"/>
       <column name="author" value="Eduardo Guerra"/>
-      <column name="publishing_company" value="Casa do Código"/>
+      <column name="publisher" value="Casa do Código"/>
       <column name="pages" value="274"/>
     </insert>
     <insert tableName="book">
@@ -115,7 +189,7 @@
       <column name="title" value="Reflexão e Anotações"/>
       <column name="subtitle" value="Componentes reutilizáveis em Java com"/>
       <column name="author" value="Eduardo Guerra"/>
-      <column name="publishing_company" value="Casa do Código"/>
+      <column name="publisher" value="Casa do Código"/>
       <column name="pages" value="356"/>
     </insert>
     <insert tableName="book">
@@ -123,7 +197,7 @@
       <column name="title" value="Introduction to Neural Networks for Java"/>
       <column name="subtitle" value="An artificial neural networks aproach"/>
       <column name="author" value="Jeff Heaton"/>
-      <column name="publishing_company" value="Heaton Research"/>
+      <column name="publisher" value="Heaton Research"/>
       <column name="pages" value="439"/>
     </insert>
     <insert tableName="book">
@@ -131,7 +205,7 @@
       <column name="title" value="Java 8 in Action"/>
       <column name="subtitle" value="Lambdas, streams, and functional-style programming"/>
       <column name="author" value="Raoul Gabriel Urma, Mario Fusco, Alan Mycroft"/>
-      <column name="publishing_company" value="Manning"/>
+      <column name="publisher" value="Manning"/>
       <column name="pages" value="479"/>
     </insert>
     <insert tableName="book">
@@ -139,7 +213,7 @@
       <column name="title" value="JSF e JPA"/>
       <column name="subtitle" value="Aplicações Java para web com"/>
       <column name="author" value="Gilliard Cordeiro"/>
-      <column name="publishing_company" value="Casa do Código"/>
+      <column name="publisher" value="Casa do Código"/>
       <column name="pages" value="221"/>
     </insert>
     <insert tableName="book">
@@ -147,21 +221,21 @@
       <column name="title" value="As Conexões Ocultas"/>
       <column name="subtitle" value="Ciência para uma vida sustentável"/>
       <column name="author" value="Fritjof Capra"/>
-      <column name="publishing_company" value="Cultrix"/>
+      <column name="publisher" value="Cultrix"/>
       <column name="pages" value="296"/>
     </insert>
     <insert tableName="book">
       <column name="id" valueSequenceNext="book_seq"/>
       <column name="title" value="Inferno"/>
       <column name="author" value="Dan Brown"/>
-      <column name="publishing_company" value="Arqueiro"/>
+      <column name="publisher" value="Arqueiro"/>
       <column name="pages" value="448"/>
     </insert>
     <insert tableName="book">
       <column name="id" valueSequenceNext="book_seq"/>
       <column name="title" value="O Pequeno Príncipe"/>
       <column name="author" value="Antoine de Saint-Exupéry"/>
-      <column name="publishing_company" value="Reynal and Hitchcock, Gallimard"/>
+      <column name="publisher" value="Reynal and Hitchcock, Gallimard"/>
       <column name="pages" value="94"/>
     </insert>
   </changeSet>

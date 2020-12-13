@@ -1,0 +1,48 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+  <changeSet id="1" author="higor">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="book_transaction"/>
+      </not>
+    </preConditions>
+
+    <createTable tableName="book_transaction">
+      <column name="id" type="uuid"/>
+      <column name="src_account_id" type="integer"/>
+      <column name="dst_account_id" type="integer"/>
+      <column name="account_book_id" type="integer"/>
+      <column name="item_amount" type="integer" defaultValue="1"/>
+      <column name="type" type="char(2)"/>
+      <column name="state" type="char(1)"/>
+      <column name="start_dt" type="timestamptz"/>
+      <column name="end_dt" type="timestamptz"/>
+    </createTable>
+    <addNotNullConstraint tableName="transaction" columnName="id"/>
+    <addNotNullConstraint tableName="transaction" columnName="src_account_id"/>
+    <addNotNullConstraint tableName="transaction" columnName="dst_account_id"/>
+    <addNotNullConstraint tableName="transaction" columnName="account_book_id"/>
+    <addNotNullConstraint tableName="transaction" columnName="item_amount"/>
+    <addNotNullConstraint tableName="transaction" columnName="type"/>
+    <addNotNullConstraint tableName="transaction" columnName="state"/>
+    <addNotNullConstraint tableName="transaction" columnName="start_dt"/>
+    <addPrimaryKey tableName="transaction" columnNames="id" constraintName="transaction_pkey"/>
+    <addForeignKeyConstraint baseTableName="transaction" baseColumnNames="src_account_id"
+                             constraintName="transaction_src_account_fk"
+                             referencedTableName="account"
+                             referencedColumnNames="id"/>
+    <addForeignKeyConstraint baseTableName="transaction" baseColumnNames="dst_account_id"
+                             constraintName="transaction_dst_account_fk"
+                             referencedTableName="account"
+                             referencedColumnNames="id"/>
+    <addForeignKeyConstraint baseTableName="transaction" baseColumnNames="account_book_id"
+                             constraintName="transaction_account_book_fk"
+                             referencedTableName="account_book"
+                             referencedColumnNames="id"/>
+  </changeSet>
+
+</databaseChangeLog>

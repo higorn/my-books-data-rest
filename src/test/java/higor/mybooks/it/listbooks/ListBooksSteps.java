@@ -43,7 +43,7 @@ public class ListBooksSteps {
       book.setTitle(row.get("title"));
       book.setSubtitle(row.get("subtitle"));
       book.setAuthor(row.get("author"));
-      book.setPublishingCompany(row.get("publishingCompany"));
+      book.setPublisher(row.get("publishingCompany"));
       bookRepository.save(book);
     });
   }

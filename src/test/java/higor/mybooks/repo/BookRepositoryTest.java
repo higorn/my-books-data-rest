@@ -17,7 +17,7 @@ class BookRepositoryTest {
   void whenSaved_thenFindsByTitle() {
     Book savedBook = repository.save(
         new Book().id(1).title("Effective Java").subtitle("Programming Language Guide")
-            .author("Joshua Bloch").publishingCompaty("Addison-Wesley").pages(252));
+            .author("Joshua Bloch").publisher("Addison-Wesley").pages(252));
     assertNotNull(savedBook.getId());
   }
 }
