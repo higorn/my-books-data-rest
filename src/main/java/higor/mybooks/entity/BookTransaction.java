@@ -7,7 +7,7 @@ import java.util.UUID;
 @Entity
 public class BookTransaction {
 
-  public enum TransactionType {
+  public enum TransactionType implements StringEnumType {
     SWAP("SW"), BUY_AND_SELL("BS");
 
     private final String code;
@@ -16,12 +16,13 @@ public class BookTransaction {
       this.code = code;
     }
 
+    @Override
     public String getCode() {
       return code;
     }
   }
 
-  public enum TransactionState {
+  public enum TransactionState implements StringEnumType {
     OPEN("O"), CLOSED("C");
 
     private final String code;
@@ -30,6 +31,7 @@ public class BookTransaction {
       this.code = code;
     }
 
+    @Override
     public String getCode() {
       return code;
     }

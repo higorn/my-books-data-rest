@@ -7,6 +7,7 @@ import javax.persistence.Converter;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+// TODO: extend from StringAttributeConverter
 @Converter(autoApply = true)
 public class BookConditionConverter implements AttributeConverter<UserBook.ConditionType, String> {
   @Override
