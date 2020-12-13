@@ -22,25 +22,25 @@
       <column name="start_dt" type="timestamptz"/>
       <column name="end_dt" type="timestamptz"/>
     </createTable>
-    <addNotNullConstraint tableName="transaction" columnName="id"/>
-    <addNotNullConstraint tableName="transaction" columnName="src_account_id"/>
-    <addNotNullConstraint tableName="transaction" columnName="dst_account_id"/>
-    <addNotNullConstraint tableName="transaction" columnName="account_book_id"/>
-    <addNotNullConstraint tableName="transaction" columnName="item_amount"/>
-    <addNotNullConstraint tableName="transaction" columnName="type"/>
-    <addNotNullConstraint tableName="transaction" columnName="state"/>
-    <addNotNullConstraint tableName="transaction" columnName="start_dt"/>
-    <addPrimaryKey tableName="transaction" columnNames="id" constraintName="transaction_pkey"/>
-    <addForeignKeyConstraint baseTableName="transaction" baseColumnNames="src_account_id"
-                             constraintName="transaction_src_account_fk"
+    <addNotNullConstraint tableName="book_transaction" columnName="id"/>
+    <addNotNullConstraint tableName="book_transaction" columnName="src_account_id"/>
+    <addNotNullConstraint tableName="book_transaction" columnName="dst_account_id"/>
+    <addNotNullConstraint tableName="book_transaction" columnName="account_book_id"/>
+    <addNotNullConstraint tableName="book_transaction" columnName="item_amount"/>
+    <addNotNullConstraint tableName="book_transaction" columnName="type"/>
+    <addNotNullConstraint tableName="book_transaction" columnName="state"/>
+    <addNotNullConstraint tableName="book_transaction" columnName="start_dt"/>
+    <addPrimaryKey tableName="book_transaction" columnNames="id" constraintName="book_transaction_pkey"/>
+    <addForeignKeyConstraint baseTableName="book_transaction" baseColumnNames="src_account_id"
+                             constraintName="book_transact_src_account_fk"
                              referencedTableName="account"
                              referencedColumnNames="id"/>
-    <addForeignKeyConstraint baseTableName="transaction" baseColumnNames="dst_account_id"
-                             constraintName="transaction_dst_account_fk"
+    <addForeignKeyConstraint baseTableName="book_transaction" baseColumnNames="dst_account_id"
+                             constraintName="book_transact_dst_account_fk"
                              referencedTableName="account"
                              referencedColumnNames="id"/>
-    <addForeignKeyConstraint baseTableName="transaction" baseColumnNames="account_book_id"
-                             constraintName="transaction_account_book_fk"
+    <addForeignKeyConstraint baseTableName="book_transaction" baseColumnNames="account_book_id"
+                             constraintName="book_transact_account_book_fk"
                              referencedTableName="account_book"
                              referencedColumnNames="id"/>
   </changeSet>
