@@ -22,7 +22,7 @@ public class ApiDocConfig {
         .groupName("v1")
           .select()
 //        .apis(not(withClassAnnotation(CustomIgnore.class)))
-//          .paths(paths())
+          .paths(paths())
           .build()
         .apiInfo(apiInfo())
         .tags(new Tag("Books", "Repository for book entities."));

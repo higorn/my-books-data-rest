@@ -1,7 +1,20 @@
 server:
   port: 8081
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
 spring:
+  boot:
+    admin:
+      client:
+        url: http://localhost:8082
   data:
     rest:
       basePath: /v1
@@ -24,6 +37,3 @@ application:
     secretKey: securesecuresecuresecuresecuresecuresecuresecuresecuresecuresecuresecuresecuresecuresecuresecure
     tokenPrefix: Bearer
     tokenExpirationAfterDays: 14
-
-
-

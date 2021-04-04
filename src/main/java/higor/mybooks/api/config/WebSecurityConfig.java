@@ -41,6 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfig), JwtClientCredentialsAuthenticationFilter.class)
         .authorizeRequests()
         .antMatchers("/oauth/token").permitAll()
+        .antMatchers("/actuator/**").permitAll()
         .anyRequest().authenticated()
         .and()
         .formLogin().permitAll();
