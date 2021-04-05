@@ -20,6 +20,6 @@ public interface BookRepository extends PagingAndSortingRepository<Book, Integer
       + " OR UPPER(b.subtitle) LIKE CONCAT('%',UPPER(:term),'%')"
       + " OR UPPER(b.author) LIKE CONCAT('%',UPPER(:term),'%')"
       + " OR UPPER(b.publisher) LIKE CONCAT('%',UPPER(:term),'%')")
-  @RestResource(rel = "find-by-term", path = "find-by-term")
+  @RestResource(rel = "by-term", path = "by-term")
   Page<Book> findByTerm(@Param("term") String term, Pageable pageable);
 }
