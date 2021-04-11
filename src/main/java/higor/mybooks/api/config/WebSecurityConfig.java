@@ -36,6 +36,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http
         .csrf().disable()
+//        .addFilterBefore(new ActuatorBasicAuthenticationFilter(authenticationManager()),
+//            UsernamePasswordAuthenticationFilter.class)
         .addFilterAfter(new JwtClientCredentialsAuthenticationFilter(authenticationManager(), jwtConfig, secretKey),
             UsernamePasswordAuthenticationFilter.class)
         .addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfig), JwtClientCredentialsAuthenticationFilter.class)
